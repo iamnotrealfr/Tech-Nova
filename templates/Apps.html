@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tech Nova - Home</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    {% include 'popups.html' %}
+    <!-- Header -->
+    <div class="header">
+        <div class="date-container">
+            <span class="date">{{ current_date }}</span>
+            <i class="fas fa-calendar-alt calendar-icon" onclick="openCalendarPopup()"></i>
+        </div>
+        <div class="logo-container">
+            <header><img src="{{ url_for('static', filename='uploads/technova.png') }}" alt="Tech Nova Logo" class="logo"></header>
+        </div>
+        <div class="search-login-container">
+            <div class="search-container">
+                <input type="text" placeholder="search" id="searchInput" class="search-bar-inline">
+                <button class="search-btn" onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <div id="userLoginBtn" class="login-btn" onclick="openLoginPopup()"><i class="fas fa-user"></i><span>Login</span></div>
+                <div id="userProfileBtn" style="display: none;" onclick="openUserPopup()">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=1e90ff&color=fff" alt="User" class="user-avatar-small">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation with Active Highlight -->
+    <div class="nav">
+        <a href="/" class="{{ 'active' if request.path == '/' else '' }}">HOME</a>
+        <a href="/AI" class="{{ 'active' if request.path == '/AI' else '' }}">AI</a>
+        <a href="/Gadget" class="{{ 'active' if request.path == '/Gadget' else '' }}">GADGET</a>
+        <a href="/Apps" class="{{ 'active' if request.path == '/Apps' else '' }}">APPS</a>
+        <a href="/Blockchain" class="{{ 'active' if request.path == '/Blockchain' else '' }}">BLOCKCHAIN</a>
+        <a href="/Cybersecurity" class="{{ 'active' if request.path == '/Cybersecurity' else '' }}">CYBER SECURITY</a>
+    </div>
+
+<!-- Featured Articles -->
+<div class="content">
+    {% if featured_articles %}
+        <div class="left">
+            {% for article in featured_articles[:2] %}
+                <div class="news-box" data-article-id="{{ article._id }}">
+                    <div class="image-container">
+                        <img src="{{ article.image_url }}" alt="{{ article.title }}" onerror="this.style.display='none';">
+                    </div>
+                    <div class="info">
+                        <div class="likes {{ 'liked' if article.is_liked else '' }}" onclick="toggleLike(this)"><i class="fas fa-thumbs-up"></i><span>{{ article.likes }}</span></div>
+                        <div class="report" onclick="reportPost(this)">Report</div>
+                    </div>
+                    <div class="details">
+                        <div class="source">{{ article.source }} <span class="follow {{ 'following' if article.is_following else '' }}" onclick="toggleFollow(this)">{{ 'Following' if article.is_following else '+ Follow' }}</span></div>
+                        <a href="{{ article.url }}" class="description-link"><div class="description">{{ article.summary }}</div></a>
+                        <div class="time">{{ article.published_at | format_date }}</div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No featured articles available.</p>
+            {% endfor %}
+        </div>
+        <div class="right">
+            {% for article in featured_articles[2:4] %}
+                <div class="news-box" data-article-id="{{ article._id }}">
+                    <div class="image-container">
+                        <img src="{{ article.image_url }}" alt="{{ article.title }}" onerror="this.style.display='none';">
+                    </div>
+                    <div class="info">
+                        <div class="likes {{ 'liked' if article.is_liked else '' }}" onclick="toggleLike(this)"><i class="fas fa-thumbs-up"></i><span>{{ article.likes }}</span></div>
+                        <div class="report" onclick="reportPost(this)">Report</div>
+                    </div>
+                    <div class="details">
+                        <div class="source">{{ article.source }} <span class="follow {{ 'following' if article.is_following else '' }}" onclick="toggleFollow(this)">{{ 'Following' if article.is_following else '+ Follow' }}</span></div>
+                        <a href="{{ article.url }}" class="description-link"><div class="description">{{ article.summary }}</div></a>
+                        <div class="time">{{ article.published_at | format_date }}</div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No featured articles available.</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No featured articles available.</p>
+    {% endif %}
+</div>
+
+<!-- News Grid -->
+<div class="container">
+    <div class="news-grid">
+        {% for article in articles[4:20] %}
+        <div class="news-item" data-article-id="{{ article._id }}">
+            <div class="image-container">
+                <img src="{{ article.image_url }}" alt="{{ article.title }}" onerror="this.style.display='none';">
+            </div>
+            <div class="info">
+                <div class="likes {{ 'liked' if article.is_liked else '' }}" onclick="toggleLike(this)"><i class="fas fa-thumbs-up"></i><span>{{ article.likes }}</span></div>
+                <div class="report" onclick="reportPost(this)">Report</div>
+            </div>
+            <div class="news-title">{{ article.title }}</div>
+            <a href="{{ article.url }}" class="description-link"><div class="news-description">{{ article.summary }}</div></a>
+            <div class="news-time">{{ article.published_at | format_date }}</div>
+            <div class="news-meta">
+                <span class="news-author">{{ article.source }}</span>
+                <span class="follow {{ 'following' if article.is_following else '' }}" onclick="toggleFollow(this)">{{ 'Following' if article.is_following else '+ Follow' }}</span>
+            </div>
+        </div>
+        {% else %}
+            <p>No additional articles available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2025 Tech Nova. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'92b877e3ec36dd1e',t:'MTc0Mzg1MDA1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

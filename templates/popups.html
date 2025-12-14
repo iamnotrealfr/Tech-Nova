@@ -1,0 +1,83 @@
+<!-- templates/popups.html -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Login Popup -->
+<div class="popup-container" id="loginPopupContainer">
+    <button class="close-btn" onclick="closeLoginPopup()"><i class="fas fa-times"></i></button>
+    <div class="login-popup" id="loginPopup">
+        <div class="login-form">
+            <input type="text" placeholder="Username or Email" id="loginUsernameEmail" required>
+            <input type="password" placeholder="Password" id="loginPassword" required>
+            <button class="login-submit-btn" onclick="submitLogin()">Login</button>
+            <button class="login-cancel-btn" onclick="closeLoginPopup()">Cancel</button>
+            <p style="text-align: center; margin-top: 10px;">
+                Don't have an account? <a href="#" onclick="console.log('Opening Create Account Popup'); openCreateAccountPopup(); return false;">Create one</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Create New Account Popup -->
+<div class="popup-container" id="createAccountPopupContainer">
+    <button class="close-btn" onclick="closeCreateAccountPopup()"><i class="fas fa-times"></i></button>
+    <div class="login-popup" id="createAccountPopup">
+        <div class="login-form">
+            <input type="text" placeholder="Username" id="createAccountUsername" required>
+            <input type="email" placeholder="Email Address" id="createAccountEmail" required>
+            <input type="password" placeholder="Password" id="createAccountPassword" required>
+            <input type="password" placeholder="Re-enter Password" id="createAccountPasswordConfirm" required>
+            <select id="createAccountGender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="number" placeholder="Age" id="createAccountAge" min="13" max="120" required>
+            <p style="font-size: 12px; color: #555; margin: 10px 0;">
+                Password must include digits (0-9), alphabets (upper/lowercase), and symbols (e.g., *_)
+            </p>
+            <button class="login-submit-btn" onclick="submitCreateAccount()">Create Account</button>
+            <button class="login-cancel-btn" onclick="closeCreateAccountPopup()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- User Profile Popup -->
+<div class="popup-container" id="userPopupContainer">
+    <button class="close-btn" onclick="closeUserPopup()"><i class="fas fa-times"></i></button>
+    <div class="user-popup" id="userPopup">
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=John+Doe&background=1e90ff&color=fff" alt="User Avatar" class="user-avatar" id="userAvatar">
+            <h3 class="user-name" id="userName">John Doe</h3>
+            <p class="user-email" id="userEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e5b5d4b5c6e4b564f435e424b004d4143">[email&#160;protected]</a></p>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="userLikes">0</div>
+                    <div class="stat-label">Likes</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="userFollowing">0</div>
+                    <div class="stat-label">Following</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="userReports">0</div>
+                    <div class="stat-label">Reports</div>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Calendar Popup -->
+<div class="popup-container" id="calendarPopupContainer">
+    <button class="close-btn" onclick="closeCalendarPopup()"><i class="fas fa-times"></i></button>
+    <div class="calendar-popup" id="calendarPopup">
+        <div class="calendar-header">
+            <button class="calendar-nav-btn" onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
+            <div class="calendar-month-year" id="calendarMonthYear"></div>
+            <button class="calendar-nav-btn" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+</div>
